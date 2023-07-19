@@ -9,7 +9,22 @@ body {
 }
 
 header {
-  background-image: url("/asset/img/nen-mua-ipad-nao.jpg");
+  background-image: linear-gradient(to right, rgba(198, 255, 221, 0.7607843137), rgba(251, 216, 134, 0.537254902), rgba(247, 121, 125, 0.662745098));
+}
+header .navbar-brand {
+  color: #ee9ca7;
+  font-size: 30px;
+  padding-left: 50px;
+  letter-spacing: 3px;
+}
+header .icon {
+  color: rgba(255, 0, 0, 0.783);
+  font-size: 25px;
+  padding-right: 30px;
+}
+
+.banner {
+  background-image: url("../../../asset/img/nen-mua-ipad-nao.jpg");
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,7 +33,7 @@ header {
   justify-content: center;
   align-items: center;
 }
-header .title {
+.banner .title {
   color: #33FFFF;
   font-size: 60px;
   font-weight: 700;
@@ -28,12 +43,12 @@ header .title {
 }
 
 .select {
-  background-color: rgba(0, 0, 0, 0.78);
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
   padding: 10px 0;
 }
 .select .container .cartList {
   position: fixed;
-  top: 5%;
+  top: 2%;
   right: 5%;
 }
 .select .container ul {
@@ -116,10 +131,9 @@ header .title {
 
 .product {
   padding-bottom: 50px;
-  background-color: #CC99FF;
+  background-image: linear-gradient(to right, #8360c3, #2ebf91);
 }
 .product #product__content {
-  background-color: rgba(0, 0, 0, 0.116);
   border-radius: 10px;
   margin-right: 20px;
 }
@@ -127,13 +141,13 @@ header .title {
   height: auto;
 }
 .product .container .product__title {
-  color: black;
+  color: rgba(172, 255, 47, 0.8352941176);
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 footer {
-  background-color: rgb(128, 128, 128);
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
   color: white;
   padding: 50px 0;
 }/*# sourceMappingURL=home.css.map */
