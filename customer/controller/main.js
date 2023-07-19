@@ -259,8 +259,8 @@ renderCart()
 // Tổng tiền
 function totalPrice() {
     let totalPrice = 0
-    for (let i = 0; i < dsSP.arrSP.length; i++) {
-        const price = Number(dsSP.arrSP[i].price)
+    for (let i = 0; i < cartList.arrSP.length; i++) {
+        const price = Number(cartList.arrSP[i].price * cartList.arrSP[i].quantity)
         totalPrice += price
     }
     getElement(".totalPrice").innerHTML = totalPrice.toLocaleString() + "đ"
@@ -293,6 +293,7 @@ const giamSL = (a) => {
             }
         }
     }
+    totalPrice()
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
@@ -306,6 +307,7 @@ const tangSL = (b) => {
             cartList.arrSP[i].quantity += 1
         }
     }
+    totalPrice()
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
