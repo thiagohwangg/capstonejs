@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+header {
+  background-image: url("/asset/img/nen-mua-ipad-nao.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header .title {
+  color: #33FFFF;
+  font-size: 60px;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  display: block;
+}
+
+.select {
+  background-color: rgba(0, 0, 0, 0.78);
+  padding: 10px 0;
+}
+.select .container .cartList {
+  position: fixed;
+  top: 5%;
+  right: 5%;
+}
+.select .container ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.select .container .menu {
+  display: flex;
+}
+.select .container .menu .nav-item {
+  margin-right: 70px;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: whitesmoke;
+}
+.select .container .icon {
+  font-size: 20px;
+  color: #CC99FF;
+  margin-right: 10px;
+}
+.select .container .icon1 {
+  cursor: pointer;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 50%;
+  color: red;
+  font-size: 20px;
+  margin-right: 3px;
+}
+.select .container .number {
+  position: relative;
+  padding: 0.5px 5px;
+  top: -10px;
+  left: -23px;
+  z-index: 1;
+  background-color: white;
+  font-size: 15px;
+  border-radius: 10px;
+}
+.select .container .cart__title {
+  color: black;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.select .container .cart__text {
+  font-size: 14px;
+}
+.select .container .bg {
+  cursor: pointer;
+  display: inline-block;
+  color: white;
+  width: 20px;
+  height: 20px;
+  font: 20px/1 Arial, sans-serif;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #284c5b;
+}
+.select .container .totalPrice {
+  color: red;
+  font-size: 25px;
+}
+.select .container .payMoney {
+  margin-top: 20px;
+}
+.select .container .pay__title {
+  font-weight: 500;
+}
+.select .container .pay {
+  border-radius: 10px;
+  max-width: 150px;
+  color: blue;
+  padding: 3px 0;
+  margin-top: 15px;
+  background-color: pink;
+  border: 1px solid pink;
+}
+
+.product {
+  padding-bottom: 50px;
+  background-color: #CC99FF;
+}
+.product #product__content {
+  background-color: rgba(0, 0, 0, 0.116);
+  border-radius: 10px;
+  margin-right: 20px;
+}
+.product .container .product__text {
+  height: auto;
+}
+.product .container .product__title {
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+footer {
+  background-color: rgb(128, 128, 128);
+  color: white;
+  padding: 50px 0;
+}/*# sourceMappingURL=home.css.map */

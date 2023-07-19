@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/asset/img/hinh-nen-cong-nghe.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container .client {
+  position: absolute;
+  left: 5%;
+  bottom: 45%;
+  display: flex;
+}
+.container .client .img img {
+  max-width: 150px;
+  border-radius: 50%;
+  width: 100%;
+}
+.container .client .link {
+  text-decoration: none;
+  display: grid;
+  align-items: center;
+  margin-left: 40px;
+  font-size: 35px;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: white;
+  transition: all 0.5s;
+}
+.container .client .link:hover {
+  font-size: 45px;
+  color: rgb(37, 243, 236);
+}
+.container .admin {
+  position: absolute;
+  left: 5%;
+  bottom: 15%;
+  display: flex;
+}
+.container .admin .img img {
+  max-width: 150px;
+  border-radius: 50%;
+  width: 100%;
+}
+.container .admin .link {
+  text-decoration: none;
+  display: grid;
+  align-items: center;
+  margin-left: 40px;
+  font-size: 35px;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: white;
+  transition: all 0.5s;
+}
+.container .admin .link:hover {
+  font-size: 45px;
+  color: deeppink;
+}/*# sourceMappingURL=style.css.map */

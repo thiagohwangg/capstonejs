@@ -1,0 +1,154 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-image: url("/asset/img/nen-mua-ipad-nao.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        @include setText($color-1, $fs-8, $fw-3);
+        font-style: italic;
+        text-align: center;
+        display: block;
+        // transform: translate(50%,550%);
+    }
+}
+
+.select {
+    background-color: rgba(0, 0, 0, 0.78);
+    padding: 10px 0;
+
+    .container {
+        .cartList {
+            position: fixed;
+            top: 5%;
+            right:5%;
+        }
+
+        //Header
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .menu {
+            display: flex;
+
+            .nav-item {
+                margin-right: $mg-3;
+                display: flex;
+                align-items: center;
+                font-size: $fs-2;
+                color: whitesmoke;
+            }
+        }
+
+        .icon {
+            font-size: 20px;
+            color: #CC99FF;
+            margin-right: 10px;
+        }
+
+        .icon1 {
+            cursor: pointer;
+            background-color: whitesmoke;
+            padding: 10px;
+            border-radius: 50%;
+            color: red;
+            font-size: 20px;
+            margin-right: 3px;
+        }
+
+        .number {
+            position: relative;
+            padding: 0.5px 5px;
+            top: -10px;
+            left: -23px;
+            z-index: 1;
+            background-color: white;
+            font-size: 15px;
+            border-radius: 10px;
+        }
+
+        .cart__title {
+            @include setText(black, $fs-2, $fw-3);
+
+        }
+
+        .cart__text {
+            font-size: $fs-1;
+        }
+
+        .bg {
+            cursor: pointer;
+            display: inline-block;
+            color: white;
+            width: 20px;
+            height: 20px;
+            font: 20px/1 Arial, sans-serif;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #284c5b;
+        }
+
+        .totalPrice {
+            color: red;
+            font-size: 25px;
+        }
+
+        .payMoney{
+            margin-top: 20px;
+        }
+
+        .pay__title {
+            font-weight: 500;
+        }
+
+        .pay {
+            border-radius: 10px;
+            max-width: 150px;
+            color: blue;
+            padding: 3px 0;
+            margin-top: 15px;
+            background-color: pink;
+            border: 1px solid pink;
+        }
+
+        //Footer
+    }
+}
+
+.product {
+    padding-bottom: 50px ;
+    background-color: #CC99FF;
+    #product__content{
+        background-color: rgba(0, 0, 0, 0.116);
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .container {
+        .product__text {
+            // height: 200px;
+            height: auto
+        }
+
+        .product__title {
+            @include setText(black, $fs-3, $fw-3);
+
+        }
+    }
+}
+
+footer {
+    background-color: rgb(128, 128, 128);
+    color: white;
+    padding: 50px 0;
+}
