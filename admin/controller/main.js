@@ -205,3 +205,29 @@ function clearSpan() {
     getElement("#maSP").value = ""
     getElement("#idProductUpdate").value = ""
 }
+
+// sort = () => {
+//     const select = getElement("#select2").value
+//     const promise = axios({
+//         url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+//         method: "GET",
+//     })
+//     promise
+//         .then((result)=>{
+//             if(select === "full"){
+//                 renderSP((result.data).length, result.data)
+//             } else if (select === "tangDan"){
+//                 let arrSort = (result.data).sort((a,b) => Number(a.price)-Number(b.price))
+                    
+//                 renderSanPham(arrSort.length,arrSort)
+//                 console.log(arrSort);
+//             } else if (select === "giamDan"){
+//                 let arrSort = result.data.sort((a,b)=>Number(b.price)-Number(a.price))
+//                 renderSanPham(arrSort.length,arrSort)
+//             }
+//         })
+//         .catch((err)=>{
+//             console.log(err);
+//         }) 
+// }
+// getElement("#select2").onchange = sort
