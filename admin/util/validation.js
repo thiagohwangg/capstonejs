@@ -19,9 +19,9 @@ function kiemTraChuoi(value, minLength, maxLength, selector, messErr) {
     return true
 }
 
-function vl(id,idThongbao){
+function vlSpace(id,idThongbao){
     if(id === ""){
-        document.getElementById(idThongbao).innerHTML = "Không được đê trống"
+        document.getElementById(idThongbao).innerHTML = "Vui lòng điền thông tin"
         document.getElementById(idThongbao).style.display ="inline-block"
         return false
     }else{
@@ -30,18 +30,21 @@ function vl(id,idThongbao){
     } 
 }
 
-function kiemTraSo(value, min, max, selector, messErr) {
-    // Nếu như kiểm tra false
-    if (value < min || value > max) {
-        getElement(selector).innerHTML = messErr
+function checkNumber (id,idThongbao) {
+    const regex = /^[0-9]+$/
+    if(id === ""){
+        document.getElementById(idThongbao).innerHTML = "Vui lòng định dạng không có kí tự chữ kèm kí tự đặc biệt và không được để trống. Đặc biệt xin vui lòng không nhập kí tự e"
+        document.getElementById(idThongbao).style.display ="inline-block"
         return false
-    }
-
-    // Nếu như kiểm tra true
-    getElement(selector).innerHTML = ''
-    return true
+    }else if (regex.test(id) === false){
+        document.getElementById(idThongbao).innerHTML = "Giá tiền không được có kí tự chữ"
+        document.getElementById(idThongbao).style.display ="inline-block"
+        return false
+    }else{
+        document.getElementById(idThongbao).style.display ="none"
+        return true
+    } 
 }
-
 /**
  *
  * @param value chuỗi cần kiểm tra
@@ -63,51 +66,38 @@ function kiemTraPattern(value, selector, pattern, messErr) {
 }
 
 
-function checkAccount(account, dsnv, isEdit, selector, messErr) {
-    if (isEdit) return true
-    var isFlag = true
-    for (var i = 0; i < dsnv.length; i++) {
-        if (dsnv[i].account === account) {
-            isFlag = false
-            break
+function checkAccount(maSP,selector, messErr,isEdit) {
+    if(isEdit) return true
+    let isFlag = true
+    const promise = axios({
+        url: 'https://649a5a07bf7c145d0238becd.mockapi.io/Products',
+        method: 'GET',
+    })
+    promise
+    .then((result)=>{
+        for (let i = 0; i < result.data.length; i++) {
+            console.log(result.data[i].maSP);
+            console.log(maSP);
+            if (result.data[i].maSP === maSP) {
+                isFlag = false
+                break
+            }
         }
-    }
-    if (!isFlag) {
-        getElement(selector).innerHTML = messErr
-        getElement(selector).style.display = "inline-block"
-        return false
-    } else {
-        getElement(selector).style.display = "none"
-        return true
-    }
+        if (!isFlag) {
+            getElement(selector).innerHTML = messErr
+            getElement(selector).style.display = "inline-block"
+            return false
+        } else {
+            getElement(selector).style.display = "none"
+            return true
+        }
+    })
+    .catch((err)=>{
+        console.log("check thất bại");
+    })
+    
 }
 
-function checkMaSP(maSP, isEdit, selector, messErr) {
-    let url = 'https://649a5a07bf7c145d0238becd.mockapi.io/Products?maSP=' + maSP;
-    return axios.get(url)
-      .then(function(response) {
-        let isExist = false;
-        if (response.data && response.data.length > 0) {
-          if (isEdit) {
-            let sanPham = response.data[0];
-            if (sanPham.id !== sanPham.id) {
-              isExist = true;
-              getElement(selector).innerHTML = ''
-              getElement(selector).innerHTML = messErr
-                // getElement(selector).style.display = 'none'
-            }
-          } else {
-            isExist = false;
-            // getElement(selector).innerHTML = messErr
-            getElement(selector).innerHTML = ''
-          }
-        }
-        return isExist;
-      })
-      .catch(function(error) {
-        console.log('error: ',error)
-      });
-  }
 
 
   

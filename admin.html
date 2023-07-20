@@ -57,14 +57,13 @@
             >
                 + Add Product
             </button> 
-        </div>
-        <li class="nav-item text-white">
-            <i class="fa-solid fa-sort icon"></i>
-            <select class="nav-link bg-dark" id="select2">
-                <option value="full">Lọc sản phẩm</option>
-                <option class="text-white" value="tangDan">Giá tăng dần</option>
-                <option class="text-white" value="giamDan">Giá giảm dần</option>
+            <select id="select" class="btn line" style="background-image: linear-gradient(95.2deg, rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64% ); color:rgba(0, 0, 0, 0.849);padding:9px">
+                <i class="fa-solid fa-sort icon"></i>
+                <option value="full">Sort giá</option>
+                <option value="tangDan">Giá tăng dần</option>
+                <option value="giamDan">Giá giảm dần</option>
             </select>
+        </div>
         </li>
         <table class="table mt-3">
             <thead>
@@ -112,7 +111,7 @@
                         </div>
                         <div class="form-group ">
                             <p>Price</p>
-                            <input id="price" class="form-control" placeholder="Price" />
+                            <input type="number" id="price" class="form-control" placeholder="Price" />
                             <span class="sp-thongbao" id="tbGia"></span>
                         </div>
                         <div class="form-group ">
@@ -161,11 +160,10 @@
                     <div class="modal-footer">
                         <button id="btnSave" type="button" class="btn btn-primary">Save</button>
                         <div id="updatePrd">
-
+                            <!-- <button id="btnEdit" type="button" class="btn btn-primary">
+                                Update
+                            </button> -->
                         </div>
-                        <!-- <button id="btnEdit" type="button" class="btn btn-primary">
-                            Update
-                        </button> -->
                     </div>
                 </div>
             </div>

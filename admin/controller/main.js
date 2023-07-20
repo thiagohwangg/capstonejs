@@ -1,9 +1,8 @@
 // AXIOS
 function renderSanPham(result) {
     let htmlContent = '';
-    let resultLength = (result.data).length;
-    for (let i = 0; i < resultLength; i++) {
-        let sp = result.data[i]
+    for (let i = 0; i < result.length; i++) {
+        let sp = result[i]
         htmlContent += `
         <tr>
             <td>${i + 1}</td>
@@ -22,6 +21,7 @@ function renderSanPham(result) {
             <td>${sp.maSP}</td>
             <td>
                 <button 
+                    style=" width: 100%;"
                     class='btn btn-danger' 
                     onclick="deleteSanPham(${sp.id})"
                 >
@@ -29,6 +29,8 @@ function renderSanPham(result) {
                 </button>
                 <button 
                     class='btn btn-success ml-3' 
+                    style="margin-top: 5px;
+                    width: 100%;display=none"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onclick="updateSanPham(${sp.id})"
@@ -51,7 +53,7 @@ function getSPList() {
 
     promise
         .then(function (result) {
-            renderSanPham(result)
+            renderSanPham(result.data)
         })
 
         .catch(function (err) {
@@ -62,9 +64,10 @@ function getSPList() {
 getSPList()
 
 getElement("#addPrd").onclick = () => {
+    clearInput()
     clearSpan()
-    getElement("#btnSave").style.display = 'inline-block';
-    
+    getElement("#btnSave").style.display = 'inline-block';  
+    getElement("#updatePrd").innerHTML = ""  
 }
 
 // hàm get element
@@ -73,7 +76,7 @@ function getElement(selector) {
 }
 
 // lấy thông tin từ user
-function layThongTinSP() {
+function layThongTinSP(isEdit) {
     let name = getElement('#name').value
     let price = getElement('#price').value
     let screen = getElement('#screen').value
@@ -89,25 +92,22 @@ function layThongTinSP() {
 
     let isValid = true;
 
-    isValid &= vl(sanPham.name, 'tbName')
-    isValid &= vl(sanPham.price, 'tbGia')
-    isValid &= vl(sanPham.screen, 'tbScreen')
-    isValid &= vl(sanPham.backCamera, 'tbBcam')
-    isValid &= vl(sanPham.frontCamera, 'tbFcam')
-    isValid &= vl(sanPham.image, 'tbImage')
-    isValid &= vl(sanPham.desc, 'tbDesc')
-    isValid &= vl(sanPham.type, 'tbType')
-    isValid &= vl(sanPham.maSP, 'tbMaSP')
-    // isValid &= checkMaSP(sanPham.maSP, isEdit, '#tbMaSP', 'Mã SP đã tồn tại')
+    isValid &= vlSpace(sanPham.name, 'tbName')
+    isValid &= checkNumber(sanPham.price,"tbGia")
+    isValid &= vlSpace(sanPham.screen, 'tbScreen')
+    isValid &= vlSpace(sanPham.backCamera, 'tbBcam')
+    isValid &= vlSpace(sanPham.frontCamera, 'tbFcam')
+    isValid &= vlSpace(sanPham.image, 'tbImage')
+    isValid &= vlSpace(sanPham.desc, 'tbDesc')
+    isValid &= vlSpace(sanPham.type, 'tbType')
+    isValid &= vlSpace(sanPham.maSP, 'tbMaSP') && checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",isEdit)
     return isValid ? sanPham : undefined
-    // return sanPham
 }
 
 
 // thêm sản phẩm
 getElement('#btnSave').onclick = function () {
-
-    let sanPham = layThongTinSP()
+    let sanPham = layThongTinSP(false)
     if (sanPham) {
         let promise = axios({
             url: 'https://649a5a07bf7c145d0238becd.mockapi.io/Products',
@@ -147,11 +147,11 @@ function deleteSanPham(idSanPham) {
 
 }
 
-let idSanPhamUpdate = ''
 
 // update sản phẩm
 function updateSanPham(idSanPham) {
     getElement("#btnSave").style.display = "none"
+    clearSpan()
     let promise = axios({
         url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${idSanPham}`,
         method: 'GET'
@@ -159,8 +159,6 @@ function updateSanPham(idSanPham) {
 
     promise.then(function (result) {
         let sp = result.data
-        idSanPhamUpdate = sp.id
-
         getElement('#name').value = sp.name
         getElement('#price').value = sp.price
         getElement('#screen').value = sp.screen
@@ -171,15 +169,20 @@ function updateSanPham(idSanPham) {
         getElement('#type').value = sp.type
         getElement('#maSP').value = sp.maSP
         getElement('#idProductUpdate').value = sp.id
-        getElement('#updatePrd').innerHTML = `
-        <button id="btnEdit" type="button" class="btn btn-primary" onclick="editSP(${sp.id})"=>
-                Update
-            </button>`
+        // getElement("#btnEdit").click = editSP(sp.id)
+        getElement("#updatePrd").innerHTML = `
+        <button id="btnEdit" type="button" class="btn btn-primary" onclick=editSP(${sp.id})>
+            Update
+        </button>
+                            `
+    })
+    .catch((err) => {
+        console.log(err);
     })
 }
 
 function editSP(id) {
-    let sanPhamEdit = layThongTinSP()
+    let sanPhamEdit = layThongTinSP(true)
     let promise = axios({
         url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${id}`,
         method: 'PUT',
@@ -189,11 +192,13 @@ function editSP(id) {
     promise.then(function () {
         getElement('.btn-close').click()
         getSPList()
+        clearInput()
         clearSpan()
+        getElement("#updatePrd").innerHTML = ""
     })
 }
 
-function clearSpan() {
+function clearInput() {
     getElement("#name").value = ""
     getElement("#price").value = ""
     getElement("#screen").value = ""
@@ -205,29 +210,38 @@ function clearSpan() {
     getElement("#maSP").value = ""
     getElement("#idProductUpdate").value = ""
 }
-
-// sort = () => {
-//     const select = getElement("#select2").value
-//     const promise = axios({
-//         url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
-//         method: "GET",
-//     })
-//     promise
-//         .then((result)=>{
-//             if(select === "full"){
-//                 renderSP((result.data).length, result.data)
-//             } else if (select === "tangDan"){
-//                 let arrSort = (result.data).sort((a,b) => Number(a.price)-Number(b.price))
+function clearSpan(){
+    getElement("#tbName").style.display = "none"
+    getElement("#tbGia").style.display = "none"
+    getElement("#tbScreen").style.display = "none"
+    getElement("#tbBcam").style.display = "none"
+    getElement("#tbFcam").style.display = "none"
+    getElement("#tbImage").style.display = "none"
+    getElement("#tbDesc").style.display = "none"
+    getElement("#tbType").style.display = "none"
+    getElement("#tbMaSP").style.display = "none"
+}
+sort = () => {
+    const select = getElement("#select").value
+    const promise = axios({
+        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        method: "GET",
+    })
+    promise
+        .then((result)=>{
+            if(select === "full"){
+                renderSanPham(result.data)
+            } else if (select === "tangDan"){
+                let arrSort = (result.data).sort((a,b) => Number(a.price)-Number(b.price))
                     
-//                 renderSanPham(arrSort.length,arrSort)
-//                 console.log(arrSort);
-//             } else if (select === "giamDan"){
-//                 let arrSort = result.data.sort((a,b)=>Number(b.price)-Number(a.price))
-//                 renderSanPham(arrSort.length,arrSort)
-//             }
-//         })
-//         .catch((err)=>{
-//             console.log(err);
-//         }) 
-// }
-// getElement("#select2").onchange = sort
+                renderSanPham(arrSort)
+            } else if (select === "giamDan"){
+                let arrSort = result.data.sort((a,b)=>Number(b.price)-Number(a.price))
+                renderSanPham(arrSort)
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        }) 
+}
+getElement("#select").onchange = sort
