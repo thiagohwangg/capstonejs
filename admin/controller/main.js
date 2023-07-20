@@ -66,6 +66,7 @@ function getSPList() {
 getSPList()
 
 getElement("#addPrd").onclick = () => {
+    getElement(".masp").style.display = "inline-block"
     clearInput()
     clearSpan()
     getElement("#btnSave").style.display = 'inline-block';  
@@ -95,32 +96,21 @@ function layThongTinSP(isEdit) {
     let isValid = true;
 
     isValid &= vlSpace(sanPham.name, 'tbName')
-    // console.log(isValid);
     isValid &= checkNumber(sanPham.price,"tbGia")
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.screen, 'tbScreen')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.backCamera, 'tbBcam')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.frontCamera, 'tbFcam')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.image, 'tbImage')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.desc, 'tbDesc')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.type, 'tbType')
-    // console.log(isValid);
     isValid &= vlSpace(sanPham.maSP, 'tbMaSP') 
-    console.log(isValid);
     isValid &= checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",arr,isEdit)
-    // console.log(checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",arr));
     return isValid ? sanPham : undefined
 }
 
 
 // thêm sản phẩm
 getElement('#btnSave').onclick = function () {
-    getElement(".masp").style.display = "inline-block"
     let sanPham = layThongTinSP(false)
     if (sanPham) {
         let promise = axios({
@@ -205,11 +195,15 @@ function editSP(id) {
     })
 
     promise.then(function () {
-        getElement('.btn-close').click()
-        getSPList()
-        clearInput()
-        clearSpan()
-        getElement("#updatePrd").innerHTML = ""
+        if(sanPhamEdit === undefined){
+            return false
+        } else{
+            getElement('.btn-close').click()
+            getSPList()
+            clearInput()
+            clearSpan()
+            getElement("#updatePrd").innerHTML = ""
+        }
     })
 }
 
