@@ -24,10 +24,34 @@
 
 <body>
     <header>
-        <!-- <div class="container">
-            <h1 class="title">CHÀO MỪNG ĐẾN VỚI IPAD GIÁ RẺ</h1>
-        </div> -->
-    </header>
+        <nav class="navbar navbar-expand-lg">
+            <!-- <div class="container-fluid"> -->
+              <a class="navbar-brand" href="#">IPAD GIÁ RẺ</a>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <i class="fa-brands fa-padlet icon"></i>
+              <!-- </div> -->
+            </nav>
+        </header>
+    <div class="banner">
+
+    </div>
     <div class="select">
         <div class="container">
             <div class="navbar">
@@ -38,7 +62,7 @@
                     </li>
                     <li class="nav-item">
                         <i class="fa-solid fa-pen icon"></i>
-                        <a class="nav-link" href="#">Phụ Kiện</a>
+                        <a id="phuKien" class="nav-link" href="#phukien">Phụ Kiện</a>
                     </li>
                     <li class="nav-item dropdown">
                         <i class="fa-solid fa-tablet-screen-button icon"></i>
@@ -48,8 +72,18 @@
                             <option value="Ipad Air">Ipad Air</option>
                             <option value="Ipad Gen">Ipad Gen</option>
                             <option value="Ipad Pro">Ipad Pro</option>
+                            <option id="chonIPad" value="Phụ Kiện" style="display: none;">Chọn Ipad</option>
                         </select>
                     </li>
+                    <li class="nav-item">
+                        <i class="fa-solid fa-sort icon"></i>
+                        <select class="nav-link" id="select2">
+                            <option value="full">Lọc sản phẩm</option>
+                            <option value="tangDan">Giá tăng dần</option>
+                            <option value="giamDan">Giá giảm dần</option>
+                        </select>
+                    </li>
+                    
                 </ul>
                 <div class="cartList">
                     <i class="fa-solid fa-basket-shopping icon1" data-bs-toggle="offcanvas"
@@ -90,16 +124,11 @@
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
                         <div class="modal-body" id="hoverPrd">
                             
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>

@@ -5,11 +5,10 @@ let num = 0
 let number = 1
 const dsSP = new DSSP()
 const cartList = new CartList()
-getLocalCart()
 
 
 // Truncate 
-function truncateString(str, num) {
+truncateString = (str, num) => {
     if (str.length > num && num > 3) {
         return str.slice(0, (num - 3)) + '…';
     } else if (str.length > num && num < 3) {
@@ -19,10 +18,10 @@ function truncateString(str, num) {
     }
 }
 // Hover Product
-function hoverPrd(a,b,c,d,e){
+hoverPrd = (a, b, c, d, e) => {
     htmlHover = `
         <div class="cart__title">
-        ${a}
+        <h4>${a}</h4>
         </div>
         <p class="cart__text">
         <span style="font-weight:700; color:#CC99FF">Màn hình: </span>${b}</br>
@@ -30,30 +29,23 @@ function hoverPrd(a,b,c,d,e){
         <span style="font-weight:700; color:#CC99FF">Camera trước: </span>${d}</br>
         <span style="font-weight:700; color:#CC99FF">Thông tin thêm: </span>${e}</br>
         </p>
-        <image src="/asset/img/faker.jpeg" style="width:100%; border-radius:15px;max-height: 50%"/>
+        <image src="../../asset/img/ipad-mini-6_6__1 (1).webp" style="width:100%; border-radius:15px;max-height: 50%"/>
         `
-        getElement("#hoverPrd").innerHTML = htmlHover
-}   
+    getElement("#hoverPrd").innerHTML = htmlHover
+}
 //Render Giao diện chính
-function renderSP(result, resultdata) {
-    // let promise = axios({
-    //     url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
-    //     method: "GET",
-    // })
-    // promise
-    //     .then(function (result) {
-        let htmlImg = ""
-        for (let index = 0; index < result; index++) {
-            let prd = resultdata[index]
-        // <img src="${prd.image}" alt="">
-        htmlImg += `<div class="col-3" style="
+renderSP = (result, resultdata) => {
+    let htmlImg = ""
+    for (let index = 0; index < result; index++) {
+        let prd = resultdata[index]
+        htmlImg += `<div class="col-12 col-sm-6 col-md-4 col-lg-3" style="
         margin-top: 10px;
         padding-bottom: 15px;
-        border-radius: 10px;gap:10px">
+        border-radius: 10px;">
         <div class="product__img" style="max-height: 700px;
         margin-bottom: 10px;
         margin-top: 15px;">
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="hoverPrd('${prd.name}','${prd.screen}','${prd.backCamera}','${prd.frontCamera}','${prd.desc}')">
+        <button style="border-radius:20px" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="hoverPrd('${prd.name}','${prd.screen}','${prd.backCamera}','${prd.frontCamera}','${prd.desc}')">
         <image src="${prd.image}" style="width:100%; border-radius:15px;max-height: 50%"/>
         </button>
         </div>
@@ -62,7 +54,7 @@ function renderSP(result, resultdata) {
         ${truncateString(prd.name, 25)}
         </div>
         <div>
-        <span style="color:red;font-size:20px">${Number(prd.price).toLocaleString()} VNĐ</span>
+        <span style="color:#FF1493;font-size:20px">${Number(prd.price).toLocaleString()} VNĐ</span>
         </div>
         </div>
         <button id="btnThemGioHang" class="btn btn-success" style="width:60%;margin-top:10px" onclick="buyItem(${prd.id})" >Thêm vào giỏ hàng</button>
@@ -71,7 +63,7 @@ function renderSP(result, resultdata) {
     }
     document.getElementById("product__content").innerHTML = htmlImg
 }
-function getProDuct() {
+getProDuct = () => {
     const promise = axios({
         url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
         method: "GET",
@@ -91,7 +83,8 @@ function getProDuct() {
 
 getProDuct()
 // Render SP đúng lựa chọn
-function select() {
+select = () => {
+    getElement("#select2").value = "full"
     const select = getElement("#select1").value
     const promise = axios({
         url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
@@ -124,7 +117,24 @@ function select() {
         })
 }
 getElement("#select1").onchange = select;
-
+// Render phụ kiện
+accessory = () => {
+    const promise = axios({
+        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        method: "GET",
+    })
+    promise
+        .then((result)=>{
+            const accessory = result.data.filter((v)=> v.type === "Phụ Kiện")
+            renderSP(accessory.length,accessory)
+            getElement("#select1").value = "Phụ Kiện"
+            getElement("#chonIpad").style.display = "inline-block"
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+}
+getElement("#phuKien").onclick = accessory
 const buyItem = (id) => {
     getElement('#btnThemGioHang').setAttribute('data-id', id)
     const promise = axios({
@@ -136,18 +146,9 @@ const buyItem = (id) => {
             dsSP.themSP(result.data)
             const maSP = result.data.maSP
             setLocal(dsSP.arrSP, "dssp")
-            totalPrice()
             let trung = false
             let index = -1
             let price = Number(result.data.price)
-            // if(cartList.arrSP.length === 0){
-            //     const a = result.data
-            //     let itemcart = new ItemCart(a.image, a.name, a.screen, a.backCamera, a.frontCamera, 1, a.price,a.maSP)
-            //     cartList.addCart(itemcart)
-            //     setLocal(cartList.arrSP,"itemcart")
-            //     renderCart(cartList.arrSP)
-            // } else {
-            // console.log(maSP);
             for (let i = 0; i < cartList.arrSP.length; i++) {
                 let maSPCart = cartList.arrSP[i]
                 if (maSP === maSPCart.maSP) {
@@ -169,6 +170,7 @@ const buyItem = (id) => {
             }
             num++
             getElement(".number").innerHTML = num
+            totalPrice()
         })
         .catch((err) => {
             alert(err)
@@ -177,14 +179,14 @@ const buyItem = (id) => {
 
 
 // Set Local
-const setLocal = (a, b) => {
+setLocal = (a, b) => {
     const data = JSON.stringify(a)
     localStorage.setItem(b, data)
 }
 
 
 // Get Local
-const getLocal = () => {
+getLocal = () => {
     const data = localStorage.getItem("dssp")
     if (data) {
         const parseData = JSON.parse(data)
@@ -203,7 +205,7 @@ getLocal()
 
 
 // Get Local Cart Item
-function getLocalCart() {
+getLocalCart = () => {
     const data = localStorage.getItem("itemcart")
     if (data) {
         const parseData = JSON.parse(data)
@@ -216,10 +218,11 @@ function getLocalCart() {
         cartList.arrSP = arr
     }
 }
+getLocalCart()
 
 
 // Render Cart
-function renderCart() {
+renderCart = () => {
     let htmlContent = ""
     for (let i = 0; i < cartList.arrSP.length; i++) {
         let b = cartList.arrSP[i]
@@ -255,28 +258,31 @@ function renderCart() {
     getElement(".body").innerHTML = htmlContent
 }
 renderCart()
-
+let total = ""
 // Tổng tiền
-function totalPrice() {
+totalPrice = () => {
     let totalPrice = 0
-    for (let i = 0; i < dsSP.arrSP.length; i++) {
-        const price = Number(dsSP.arrSP[i].price)
+    for (let i = 0; i < cartList.arrSP.length; i++) {
+        const price = Number(cartList.arrSP[i].price * cartList.arrSP[i].quantity)
         totalPrice += price
     }
-    getElement(".totalPrice").innerHTML = totalPrice.toLocaleString() + "đ"
+    total = totalPrice
+    getElement(".totalPrice").innerHTML = totalPrice.toLocaleString()
 }
 totalPrice()
 
 // Thanh toán
 getElement(".pay").onclick = () => {
-    const data = localStorage.getItem("itemcart")
-    const data1 = localStorage.getItem("dssp")
-    if (data) {
-        if (data1) {
+    const price = total
+    console.log(price);
+    if (cartList.arrSP.length > 0 && dsSP.arrSP.length >0) {
+        if(price !== 0){
             localStorage.removeItem("itemcart")
             localStorage.removeItem("dssp")
-            alert("Thanh toán thành công")
+            alert(`Thanh toán thành công hoá đơn số tiền ${price.toLocaleString()}` )
             location.reload()
+        }else{
+             alert("Vui lòng chọn số lượng sản phẩm cần thanh toán")
         }
     } else {
         alert("Không có sản phẩm để thanh toán")
@@ -284,37 +290,41 @@ getElement(".pay").onclick = () => {
 }
 
 // Giảm Số lượng
-const giamSL = (a) => {
+giamSL = (a) => {
     for (let i = 0; i < cartList.arrSP.length; i++) {
 
         if (a == cartList.arrSP[i].maSP) {
             if (cartList.arrSP[i].quantity > 0) {
                 cartList.arrSP[i].quantity -= 1
+                num--
             }
         }
     }
+    getElement(".number").innerHTML = num
+    totalPrice()
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
 
 
 // Tăng Số lượng 
-const tangSL = (b) => {
+tangSL = (b) => {
     for (let i = 0; i < cartList.arrSP.length; i++) {
 
         if (b == cartList.arrSP[i].maSP) {
             cartList.arrSP[i].quantity += 1
+            num++
         }
     }
+    getElement(".number").innerHTML = num
+    totalPrice()
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
 
 // Remove sản phẩm 
-const removeItem = (c) => {
-    // debugger
+removeItem = (c) => {
     for (let j = dsSP.arrSP.length - 1; j >= 0; j--) {
-        // let a = dsSP.arrSP[j].maSP 
         if (c == dsSP.arrSP[j].maSP) {
             dsSP.removeItem(j)
             for (let i = 0; i < cartList.arrSP.length; i++) {
@@ -329,3 +339,97 @@ const removeItem = (c) => {
     renderCart()
     location.reload()
 }
+// Sort sản phẩm
+sort = () => {
+    const select = getElement("#select2").value
+    const select2 = getElement("#select1").value
+    const promise = axios({
+        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        method: "GET",
+    })
+    promise
+        .then((result) => {
+            if(select2 === "Ipad"){
+                if (select === "full") {
+                    renderSP(result.data.length, result.data)
+                } else if (select === "tangDan") {
+                    let arrSort = result.data.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = result.data.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            } else if(select2 === "Ipad Gen"){
+                let arr = result.data.filter((v) => v.type === "Ipad Gen")
+                if (select === "full") {
+                    renderSP(arr.length, arr)
+                } else if (select === "tangDan") {
+                    let arrSort = arr.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = arr.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            } else if (select2 === "Ipad Pro"){
+                let arr = result.data.filter((v) => v.type === "Ipad Pro")
+                if (select === "full") {
+                    renderSP(arr.length, arr)
+                } else if (select === "tangDan") {
+                    let arrSort = arr.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = arr.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            } else if (select2 === "Ipad Mini") {
+                let arr = result.data.filter((v) => v.type === "Ipad Mini")
+                if (select === "full") {
+                    renderSP(arr.length, arr)
+                } else if (select === "tangDan") {
+                    let arrSort = arr.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = arr.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            } else if (select2 === "Ipad Air"){
+                let arr = result.data.filter((v) => v.type === "Ipad Air")
+                if (select === "full") {
+                    renderSP(arr.length, arr)
+                } else if (select === "tangDan") {
+                    let arrSort = arr.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = arr.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            } else if(select2 === "Phụ Kiện"){
+                let arr = result.data.filter((v) => v.type === "Phụ Kiện")
+                if (select === "full") {
+                    renderSP(arr.length, arr)
+                } else if (select === "tangDan") {
+                    let arrSort = arr.sort((a, b) => Number(a.price) - Number(b.price))
+    
+                    renderSP(arrSort.length, arrSort)
+                    console.log(arrSort);
+                } else if (select === "giamDan") {
+                    let arrSort = arr.sort((a, b) => Number(b.price) - Number(a.price))
+                    renderSP(arrSort.length, arrSort)
+                }
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+getElement("#select2").onchange = sort
