@@ -66,37 +66,24 @@ function kiemTraPattern(value, selector, pattern, messErr) {
 }
 
 
-function checkAccount(maSP,selector, messErr,isEdit) {
+function checkAccount(maSP,selector, messErr , result , isEdit) {
     if(isEdit) return true
-    let isFlag = true
-    const promise = axios({
-        url: 'https://649a5a07bf7c145d0238becd.mockapi.io/Products',
-        method: 'GET',
-    })
-    promise
-    .then((result)=>{
-        for (let i = 0; i < result.data.length; i++) {
-            console.log(result.data[i].maSP);
-            console.log(maSP);
-            if (result.data[i].maSP === maSP) {
-                isFlag = false
-                break
+            let isFlag = false
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].maSP === maSP) {
+                    isFlag = true
+                    break
+                }
             }
-        }
-        if (!isFlag) {
-            getElement(selector).innerHTML = messErr
-            getElement(selector).style.display = "inline-block"
-            return false
-        } else {
-            getElement(selector).style.display = "none"
-            return true
-        }
-    })
-    .catch((err)=>{
-        console.log("check thất bại");
-    })
-    
-}
+            if (isFlag === true) {
+                getElement(selector).innerHTML = messErr
+                getElement(selector).style.display = "inline-block"
+                return false
+            } else {
+                getElement(selector).style.display = "none"
+                return true
+            }
+    }
 
 
 

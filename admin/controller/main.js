@@ -1,3 +1,4 @@
+let arr = []
 // AXIOS
 function renderSanPham(result) {
     let htmlContent = '';
@@ -54,6 +55,7 @@ function getSPList() {
     promise
         .then(function (result) {
             renderSanPham(result.data)
+            arr = result.data
         })
 
         .catch(function (err) {
@@ -93,20 +95,32 @@ function layThongTinSP(isEdit) {
     let isValid = true;
 
     isValid &= vlSpace(sanPham.name, 'tbName')
+    // console.log(isValid);
     isValid &= checkNumber(sanPham.price,"tbGia")
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.screen, 'tbScreen')
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.backCamera, 'tbBcam')
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.frontCamera, 'tbFcam')
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.image, 'tbImage')
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.desc, 'tbDesc')
+    // console.log(isValid);
     isValid &= vlSpace(sanPham.type, 'tbType')
-    isValid &= vlSpace(sanPham.maSP, 'tbMaSP') && checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",isEdit)
+    // console.log(isValid);
+    isValid &= vlSpace(sanPham.maSP, 'tbMaSP') 
+    console.log(isValid);
+    isValid &= checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",arr,isEdit)
+    // console.log(checkAccount(sanPham.maSP,"#tbMaSP","Mã sản phẩm đã tồn tại",arr));
     return isValid ? sanPham : undefined
 }
 
 
 // thêm sản phẩm
 getElement('#btnSave').onclick = function () {
+    getElement(".masp").style.display = "inline-block"
     let sanPham = layThongTinSP(false)
     if (sanPham) {
         let promise = axios({
@@ -151,6 +165,7 @@ function deleteSanPham(idSanPham) {
 // update sản phẩm
 function updateSanPham(idSanPham) {
     getElement("#btnSave").style.display = "none"
+    getElement(".masp").style.display = "none"
     clearSpan()
     let promise = axios({
         url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${idSanPham}`,
@@ -245,3 +260,24 @@ sort = () => {
         }) 
 }
 getElement("#select").onchange = sort
+// Search Loại nhân viên
+getElement("#searchName").addEventListener("keyup", function () {
+    let valueSearch = getElement("#searchName").value.toLowerCase()
+    valueSearch = valueSearch.replace(/\s/g, "");
+    let arrSearch = []
+    const promise = axios({
+        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        method: "GET",
+    })
+    promise
+        .then((result)=>{
+            for (let i = 0; i < result.data.length; i++) {
+                const typeNV = result.data[i].name.toLowerCase().replace(/\s/g, "")
+                if (typeNV.indexOf(valueSearch) !== -1) {
+                    arrSearch.push(result.data[i])
+                }
+            }
+            arrSearch1 = arrSearch.map((v)=>v)
+            renderSanPham(arrSearch)
+        })
+})

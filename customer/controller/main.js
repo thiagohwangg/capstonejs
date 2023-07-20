@@ -93,10 +93,10 @@ select = () => {
     promise
         .then(function (result) {
             if (select === "Ipad") {
-                if (result.data.length <= 7) {
+                if (result.data.length <= 11) {
                     renderSP(result.data.length, result.data)
                 } else if (result.data.length > 7) {
-                    renderSP(8, result.data)
+                    renderSP(12, result.data)
                 }
             } else if (select === "Ipad Gen") {
                 let select1 = result.data.filter((v) => v.type === "Ipad Gen")
@@ -226,6 +226,7 @@ renderCart = () => {
     let htmlContent = ""
     for (let i = 0; i < cartList.arrSP.length; i++) {
         let b = cartList.arrSP[i]
+        console.log(b.maSP);
         htmlContent += `<div class="col-4" style="margin-bottom: 20px;max-height: 100%;">
         <div class="product__img" style="height: 100%">
         <image src="${b.image}" style="width:100%; border-radius:5px;height: auto"/>
@@ -243,7 +244,7 @@ renderCart = () => {
         </div>
         <div class="col-8">
         <p class="cart__title">Quantity
-        <span class="bg" onclick="giamSL(${b.maSP})">-</span> <span class="numberCart">${b.quantity}</span> <span class="bg" onclick="tangSL(${b.maSP})">+</span>
+        <span class="bg" onclick="giamSL(${Number(b.maSP)})">-</span> <span class="numberCart">${b.quantity}</span> <span class="bg" onclick="tangSL(${Number(b.maSP)})">+</span>
         </p>
         </div>
         <div class="col-4 price">
@@ -274,7 +275,6 @@ totalPrice()
 // Thanh toán
 getElement(".pay").onclick = () => {
     const price = total
-    console.log(price);
     if (cartList.arrSP.length > 0 && dsSP.arrSP.length >0) {
         if(price !== 0){
             localStorage.removeItem("itemcart")
@@ -308,10 +308,11 @@ giamSL = (a) => {
 
 
 // Tăng Số lượng 
-tangSL = (b) => {
+function tangSL(maSP){
+    console.log(maSP);
     for (let i = 0; i < cartList.arrSP.length; i++) {
 
-        if (b == cartList.arrSP[i].maSP) {
+        if (maSP == cartList.arrSP[i].maSP) {
             cartList.arrSP[i].quantity += 1
             num++
         }
