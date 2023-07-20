@@ -70,10 +70,10 @@ getProDuct = () => {
     })
     promise
         .then(function (result) {
-            if (result.data.length <= 7) {
+            if (result.data.length <= 11) {
                 renderSP(result.data.length, result.data)
-            } else if (result.data.length > 7) {
-                renderSP(8, result.data)
+            } else if (result.data.length > 11) {
+                renderSP(12, result.data)
             }
         })
         .catch(function (err) {
@@ -95,7 +95,7 @@ select = () => {
             if (select === "Ipad") {
                 if (result.data.length <= 11) {
                     renderSP(result.data.length, result.data)
-                } else if (result.data.length > 7) {
+                } else if (result.data.length > 11) {
                     renderSP(12, result.data)
                 }
             } else if (select === "Ipad Gen") {
@@ -244,7 +244,7 @@ renderCart = () => {
         </div>
         <div class="col-8">
         <p class="cart__title">Quantity
-        <span class="bg" onclick="giamSL(${Number(b.maSP)})">-</span> <span class="numberCart">${b.quantity}</span> <span class="bg" onclick="tangSL(${Number(b.maSP)})">+</span>
+        <span class="bg" onclick="giamSL('${b.maSP}')">-</span> <span class="numberCart">${b.quantity}</span> <span class="bg" onclick="tangSL('${b.maSP}')">+</span>
         </p>
         </div>
         <div class="col-4 price">
@@ -292,8 +292,7 @@ getElement(".pay").onclick = () => {
 // Giảm Số lượng
 giamSL = (a) => {
     for (let i = 0; i < cartList.arrSP.length; i++) {
-
-        if (a == cartList.arrSP[i].maSP) {
+        if (a === cartList.arrSP[i].maSP) {
             if (cartList.arrSP[i].quantity > 0) {
                 cartList.arrSP[i].quantity -= 1
                 num--
@@ -309,10 +308,8 @@ giamSL = (a) => {
 
 // Tăng Số lượng 
 function tangSL(maSP){
-    console.log(maSP);
     for (let i = 0; i < cartList.arrSP.length; i++) {
-
-        if (maSP == cartList.arrSP[i].maSP) {
+        if (maSP === cartList.arrSP[i].maSP) {
             cartList.arrSP[i].quantity += 1
             num++
         }
@@ -322,7 +319,7 @@ function tangSL(maSP){
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
-
+console.log("010");
 // Remove sản phẩm 
 removeItem = (c) => {
     for (let j = dsSP.arrSP.length - 1; j >= 0; j--) {
