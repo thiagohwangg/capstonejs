@@ -84,6 +84,7 @@ getProDuct = () => {
 getProDuct()
 // Render SP đúng lựa chọn
 select = () => {
+    getElement("#select2").value = "full"
     const select = getElement("#select1").value
     const promise = axios({
         url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
