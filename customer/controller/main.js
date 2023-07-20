@@ -128,6 +128,7 @@ accessory = () => {
             const accessory = result.data.filter((v)=> v.type === "Phụ Kiện")
             renderSP(accessory.length,accessory)
             getElement("#select1").value = "Phụ Kiện"
+            getElement("#select2").value = "full"
             getElement("#chonIpad").style.display = "inline-block"
         })
         .catch((err)=>{
@@ -135,6 +136,8 @@ accessory = () => {
         })
 }
 getElement("#phuKien").onclick = accessory
+
+//Buy Item
 const buyItem = (id) => {
     getElement('#btnThemGioHang').setAttribute('data-id', id)
     const promise = axios({
@@ -319,7 +322,6 @@ function tangSL(maSP){
     setLocal(cartList.arrSP, "itemcart")
     renderCart()
 }
-console.log("010");
 // Remove sản phẩm 
 removeItem = (c) => {
     for (let j = dsSP.arrSP.length - 1; j >= 0; j--) {
@@ -354,7 +356,6 @@ sort = () => {
                     let arrSort = result.data.sort((a, b) => Number(a.price) - Number(b.price))
     
                     renderSP(arrSort.length, arrSort)
-                    console.log(arrSort);
                 } else if (select === "giamDan") {
                     let arrSort = result.data.sort((a, b) => Number(b.price) - Number(a.price))
                     renderSP(arrSort.length, arrSort)
