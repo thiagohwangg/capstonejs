@@ -48,7 +48,7 @@ function renderSanPham(result) {
 // Get SP
 function getSPList() {
     let promise = axios({
-        url: 'https://649a5a07bf7c145d0238becd.mockapi.io/Products',
+        url: 'https://64959f59b08e17c91792691c.mockapi.io/Products',
         method: 'GET',
     })
 
@@ -114,7 +114,7 @@ getElement('#btnSave').onclick = function () {
     let sanPham = layThongTinSP(false)
     if (sanPham) {
         let promise = axios({
-            url: 'https://649a5a07bf7c145d0238becd.mockapi.io/Products',
+            url: 'https://64959f59b08e17c91792691c.mockapi.io/Products',
             method: 'POST',
             data: sanPham,
         })
@@ -135,7 +135,7 @@ getElement('#btnSave').onclick = function () {
 // xóa sản phẩm
 function deleteSanPham(idSanPham) {
     let promise = axios({
-        url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${idSanPham}`,
+        url: `https://64959f59b08e17c91792691c.mockapi.io/Products/${idSanPham}`,
         method: 'DELETE',
     })
 
@@ -158,7 +158,7 @@ function updateSanPham(idSanPham) {
     getElement(".masp").style.display = "none"
     clearSpan()
     let promise = axios({
-        url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${idSanPham}`,
+        url: `https://64959f59b08e17c91792691c.mockapi.io/Products/${idSanPham}`,
         method: 'GET'
     })
 
@@ -189,7 +189,7 @@ function updateSanPham(idSanPham) {
 function editSP(id) {
     let sanPhamEdit = layThongTinSP(true)
     let promise = axios({
-        url: `https://649a5a07bf7c145d0238becd.mockapi.io/Products/${id}`,
+        url: `https://64959f59b08e17c91792691c.mockapi.io/Products/${id}`,
         method: 'PUT',
         data: sanPhamEdit,
     })
@@ -233,7 +233,7 @@ function clearSpan(){
 sort = () => {
     const select = getElement("#select").value
     const promise = axios({
-        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        url: "https://64959f59b08e17c91792691c.mockapi.io/Products",
         method: "GET",
     })
     promise
@@ -254,13 +254,13 @@ sort = () => {
         }) 
 }
 getElement("#select").onchange = sort
-// Search Loại nhân viên
+// Search Loại sản phẩm
 getElement("#searchName").addEventListener("keyup", function () {
     let valueSearch = getElement("#searchName").value.toLowerCase()
     valueSearch = valueSearch.replace(/\s/g, "");
     let arrSearch = []
     const promise = axios({
-        url: "https://649a5a07bf7c145d0238becd.mockapi.io/Products",
+        url: "https://64959f59b08e17c91792691c.mockapi.io/Products",
         method: "GET",
     })
     promise
